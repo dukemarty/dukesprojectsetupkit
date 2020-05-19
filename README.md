@@ -1,0 +1,2 @@
+# dukesprojectsetupkit
+Duke's ProjectSetupKit, 
