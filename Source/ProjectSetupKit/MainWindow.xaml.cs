@@ -22,6 +22,39 @@ namespace ProjectSetupKit
         public MainWindow()
         {
             InitializeComponent();
+
+            this.vm = new MainWindowVM(this);
+            DataContext = this.vm;
+
+            this.PreviewKeyDown += new KeyEventHandler(HandleEscapeKey);
+            this.PreviewKeyDown += new KeyEventHandler(HandleEnterKey);
+
+            Loaded += (sender, e) => MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
         }
+
+        private void HandleEscapeKey(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+        }
+
+        private void HandleEnterKey(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                if (vm.installNewProject())
+                {
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("blabla", "Error", MessageBoxButton.OK);
+                }
+            }
+        }
+
+        MainWindowVM vm;
     }
 }
