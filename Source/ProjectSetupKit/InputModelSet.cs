@@ -18,6 +18,15 @@ namespace ProjectSetupKit
             public string TypeName { get; set; }
             public string DefaultLocation { get; set; }
             public string InputDirectory { get; set; }
+
+            public InputModel() { }
+
+            public InputModel(ProjectSetupKitConfiguration.Project project)
+            {
+                TypeName = project.Name;
+                DefaultLocation = project.DefaultLocation;
+                InputDirectory = project.TemplateDirectory;
+            }
         }
 
         #region Properties
@@ -34,14 +43,9 @@ namespace ProjectSetupKit
         {
             get
             {
-                if (m_inputModels.ContainsKey(m_activeProject))
-                {
-                    return m_inputModels[m_activeProject].DefaultLocation;
-                }
-                else
-                {
-                    return "";
-                }
+                if (!m_inputModels.ContainsKey(m_activeProject)) { return ""; }
+
+                return m_inputModels[m_activeProject].DefaultLocation;
             }
         }
 
@@ -49,8 +53,8 @@ namespace ProjectSetupKit
 
         public ObservableCollection<string> ProjectTypes
         {
-            get{return new ObservableCollection<string>(m_inputModels.Keys);}
-        } 
+            get { return new ObservableCollection<string>(m_inputModels.Keys); }
+        }
         #endregion
 
         /// <summary>
@@ -96,50 +100,34 @@ namespace ProjectSetupKit
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Catched exception when trying to read xml.");
+                Console.WriteLine("Caught exception when trying to read xml: {0}\n{1}", ex.Message, ex.StackTrace);
             }
 
-            ProjectSetupKitConfiguration.Project defaultProject = null;
-            if (settings != null)
-            {
-                foreach (var s in settings.Projects.Where(s => Directory.Exists(s.TemplateDirectory.Trim())))
-                {
-                    m_inputModels[s.Name.Trim()] = new InputModel
-                    {
-                        TypeName = s.Name.Trim(),
-                        DefaultLocation = s.DefaultLocation.Trim(),
-                        InputDirectory = s.TemplateDirectory.Trim(),
-                    };
-                }
+            if (settings == null) { return; }
 
-                defaultProject = settings.Projects.FirstOrDefault(s => s.IsDefault);
-            }
-
-            m_activeProject = defaultProject != null ? defaultProject.Name.Trim() : settings.Projects.First().Name.Trim();
+            m_inputModels = settings.Projects.Where(p => Directory.Exists(p.TemplateDirectory)).ToDictionary(p => p.Name, p => new InputModel(p));
+            var defaultProject = settings.Projects.FirstOrDefault(s => s.IsDefault);
+            m_activeProject = defaultProject != null ? defaultProject.Name : settings.Projects.First().Name;
         }
 
         private bool InsertDefaultValuesIfPossible()
         {
-            var res = false;
-
             var defaultLocation = Environment.ExpandEnvironmentVariables(Resources.EnvironmentExpressionForDefaultLocation);
             var inputDirectory = Resources.DefaultTemplateName;
 
-            if (Directory.Exists(inputDirectory) && Directory.Exists(defaultLocation))
+            if (!Directory.Exists(inputDirectory) || !Directory.Exists(defaultLocation)) { return false; }
+
+            var name = Path.GetFileNameWithoutExtension(inputDirectory);
+            if (String.IsNullOrWhiteSpace(name)) { return false; }
+
+            m_inputModels[name] = new InputModel
             {
-                var name = Path.GetFileNameWithoutExtension(inputDirectory);
+                TypeName = name,
+                DefaultLocation = defaultLocation,
+                InputDirectory = inputDirectory,
+            };
 
-                m_inputModels[name] = new InputModel
-                {
-                    TypeName = name,
-                    DefaultLocation = defaultLocation,
-                    InputDirectory = inputDirectory,
-                };
-
-                res = true;
-            }
-
-            return res;
+            return true;
         }
         #endregion Private methods
 

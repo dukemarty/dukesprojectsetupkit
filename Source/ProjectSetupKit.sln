@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Studio 2013
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectSetupKit", "ProjectSetupKit\ProjectSetupKit.csproj", "{2E4C432C-5C20-4EFE-AEA3-486986BC2AA6}"
 EndProject
 Global

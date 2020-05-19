@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.ComponentModel;
 
@@ -10,6 +11,7 @@ namespace ProjectSetupKit
     {
         public ChooseLocation(MainWindowVM model)
         {
+            m_model = model;
         }
 
 
@@ -22,8 +24,18 @@ namespace ProjectSetupKit
 
         public void Execute(object parameter)
         {
+            var dialog = new FolderBrowserDialog();
+
+            var result = dialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                m_model.Location = dialog.SelectedPath;
+            }
 
         }
+
+        private readonly MainWindowVM m_model;
     }
 
     /// <summary>
@@ -111,15 +123,14 @@ namespace ProjectSetupKit
         {
             m_output.Config(ProjectName, Location);
 
+            var res = false;
             if (m_output.IsValidTarget())
             {
                 m_output.Install(m_input);
-                return true;
+                res = true;
             }
-            else
-            {
-                return false;
-            }
+
+            return res;
         }
 
         #region Events

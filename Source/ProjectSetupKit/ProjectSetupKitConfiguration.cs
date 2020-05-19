@@ -7,9 +7,27 @@ namespace ProjectSetupKit
     {
         public class Project
         {
-            public string Name { get; set; }
-            public string TemplateDirectory { get; set; }
-            public string DefaultLocation { get; set; }
+            private string m_name;
+            private string m_templateDirectory;
+            private string m_defaultLocation;
+
+            public string Name
+            {
+                get { return m_name.Trim(); }
+                set { m_name = value; }
+            }
+
+            public string TemplateDirectory
+            {
+                get { return m_templateDirectory.Trim(); }
+                set { m_templateDirectory = value; }
+            }
+
+            public string DefaultLocation
+            {
+                get { return m_defaultLocation.Trim(); }
+                set { m_defaultLocation = value; }
+            }
 
             [XmlAttribute("IsDefault")]
             public bool IsDefault { get; set; }
