@@ -17,16 +17,17 @@
         <Label Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
             Project Setup Kit
         </Label>
-        <Label Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" Name="label3" VerticalAlignment="Center" FontSize="14">
+        <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="10" Content="{Binding VersionText}"/>
+        <Label Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Center" FontSize="14">
             Type
         </Label>
-            <Label Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" Name="label1" VerticalAlignment="Center" FontSize="14" FontWeight="Bold">
+            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Center" FontSize="14" FontWeight="Bold">
             Name
         </Label>
-        <Label Grid.Row="3" HorizontalAlignment="Stretch" Margin="10" Name="label2" VerticalAlignment="Center" FontSize="14">
+        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Center" FontSize="14">
             Location
         </Label>
-        <ComboBox Grid.Row="1" Grid.Column="1" FontSize="14" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Center" Name="cbProjectType" TabIndex="3"></ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="1" FontSize="14" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Center" Name="cbProjectType" TabIndex="3" ItemsSource="{Binding ProjectTypes}" SelectedValue="{Binding ActiveType}"></ComboBox>
         <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" Name="tbProjectName" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" Text="{Binding ProjectName, Mode=TwoWay}" TabIndex="0" />
         <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" Margin="10" Name="tbLocation" VerticalAlignment="Center" FontSize="14" Text="{Binding Location, Mode=TwoWay}" TabIndex="1"/>
         <Button Content="..." Grid.Column="2" Grid.Row="3" Height="30" HorizontalAlignment="Center" Margin="5" Name="button1" VerticalAlignment="Center" Width="50" Command="{Binding ChooseLocationCommand}" TabIndex="2"/>

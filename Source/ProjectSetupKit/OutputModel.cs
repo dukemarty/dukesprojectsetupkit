@@ -22,7 +22,7 @@
             return System.IO.Directory.Exists(m_location) && !(System.IO.Directory.Exists(m_fullpath));
         }
 
-        public void Install(InputModel input)
+        public void Install(InputModelSet input)
         {
             DirectoryCopy(input.Template, m_fullpath, true);
         }
@@ -44,8 +44,8 @@
                 System.IO.Directory.CreateDirectory(destDirName);
             }
 
-            System.IO.FileInfo[] files = dir.GetFiles();
-            foreach (System.IO.FileInfo file in files)
+            var files = dir.GetFiles();
+            foreach (var file in files)
             {
                 var temppath = System.IO.Path.Combine(destDirName, file.Name);
                 file.CopyTo(temppath, false);
@@ -53,9 +53,9 @@
 
             if (copySubDirs)
             {
-                foreach (System.IO.DirectoryInfo subdir in dirs)
+                foreach (var subdir in dirs)
                 {
-                    string temppath = System.IO.Path.Combine(destDirName, subdir.Name);
+                    var temppath = System.IO.Path.Combine(destDirName, subdir.Name);
                     DirectoryCopy(subdir.FullName, temppath, copySubDirs);
                 }
             }

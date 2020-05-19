@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.ComponentModel;
 
@@ -8,7 +10,6 @@ namespace ProjectSetupKit
     {
         public ChooseLocation(MainWindowVM model)
         {
-            m_model = model;
         }
 
 
@@ -23,16 +24,21 @@ namespace ProjectSetupKit
         {
 
         }
-
-        MainWindowVM m_model;
     }
 
     /// <summary>
     /// ViewModel for MainWindow class/form.
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     class MainWindowVM : INotifyPropertyChanged
     {
         #region Properties
+
+        public string VersionText
+        {
+            get { return String.Format("v{0}", Assembly.GetExecutingAssembly().GetName().Version); }
+        }
+
         public string ProjectName
         {
             get { return m_projectName; }
@@ -56,6 +62,20 @@ namespace ProjectSetupKit
             }
         }
 
+        public CollectionView ProjectTypes
+        {
+            get { return new CollectionView(m_input.ProjectTypes); }
+        }
+
+        public string ActiveType
+        {
+            get { return m_input.CurrentName; }
+            set
+            {
+                m_input.CurrentName = value;
+                Location = m_input.DefaultLocation;
+            }
+        }
         #endregion Properties
 
         /// <summary>
@@ -64,13 +84,11 @@ namespace ProjectSetupKit
         /// <param name="window">assigned m_window for this vm</param>
         public MainWindowVM(MainWindow window)
         {
-            m_window = window;
-
             ChooseLocationCommand = new ChooseLocation(this);
 
             if (!m_input.IsValid)
             {
-                m_window.exitWithError("Input template could not be found. Program will be aborted now!");
+                window.ExitWithError("Input template could not be found. Program will be aborted now!");
             }
 
             ProjectName = "";
@@ -79,7 +97,7 @@ namespace ProjectSetupKit
 
         public void NotifyPropertyChanged(string propName)
         {
-            if (null != this.PropertyChanged)
+            if (null != PropertyChanged)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
@@ -91,7 +109,7 @@ namespace ProjectSetupKit
         /// <returns>true if the project could be installed, false else</returns>
         public bool InstallNewProject()
         {
-            this.m_output.Config(ProjectName, Location);
+            m_output.Config(ProjectName, Location);
 
             if (m_output.IsValidTarget())
             {
@@ -109,17 +127,15 @@ namespace ProjectSetupKit
         #endregion Events
 
         #region Attributes
-        private MainWindow m_window;
-
 
         /// <summary>
         /// container for input data, i.e. project template and config file
         /// </summary>
-        private InputModel m_input = new InputModel();
+        private readonly InputModelSet m_input = new InputModelSet();
         /// <summary>
         /// container for output data, i.e. target location and project name
         /// </summary>
-        private OutputModel m_output = new OutputModel();
+        private readonly OutputModel m_output = new OutputModel();
 
         /// <summary>
         /// Name of the project which is instantiated from the project template.
