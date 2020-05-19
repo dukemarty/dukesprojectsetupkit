@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using ProjectSetupKit.Properties;
 
 namespace ProjectSetupKit
 {
+    /// <summary>
+    /// Representation for input data used in installing project template.
+    /// </summary>
     class InputModel
     {
-        const string CONFIGFILENAME = "pskconfig.xml";
-        const string DEFAULTTEMPLATE = "ProjectSetupKitTemplate";
-        string DEFAULTDEFAULTLOCATION = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <remarks>Tries to load target location and template (location) from config file.</remarks>
+        /// <remarks>Postcondition: IsValid==true if a default location and a template input directory could be set, otherwise IsValid==false.</remarks>
         public InputModel()
         {
             this.defaultLocation = "";
@@ -23,9 +28,9 @@ namespace ProjectSetupKit
             }
             else
             {
-                if (System.IO.Directory.Exists(DEFAULTTEMPLATE))
+                if (System.IO.Directory.Exists(Resources.DefaultTemplateName))
                 {
-                    this.inputDirectory = DEFAULTTEMPLATE;
+                    this.inputDirectory = Resources.DefaultTemplateName;
                     this.isValid = true;
                 }
                 else
@@ -35,18 +40,13 @@ namespace ProjectSetupKit
             }
         }
 
-        public string getDefaultLocation()
-        {
-            return this.defaultLocation;
-        }
-
         private bool loadConfig()
         {
             bool res = false;
 
-            if (System.IO.File.Exists(CONFIGFILENAME))
+            if (System.IO.File.Exists(Resources.ConfigFilename))
             {
-                readXmlDatafile(CONFIGFILENAME);
+                readXmlDatafile(Resources.ConfigFilename);
 
                 if (string.IsNullOrWhiteSpace(this.defaultLocation) || string.IsNullOrWhiteSpace(this.inputDirectory))
                 {
@@ -99,9 +99,10 @@ namespace ProjectSetupKit
 
             if (String.IsNullOrWhiteSpace(this.defaultLocation))
             {
-                if (System.IO.Directory.Exists(DEFAULTDEFAULTLOCATION))
+                string defaultLocation = Environment.ExpandEnvironmentVariables(Resources.EnvironmentExpressionForDefaultLocation);
+                if (System.IO.Directory.Exists(defaultLocation))
                 {
-                    this.defaultLocation = DEFAULTDEFAULTLOCATION;
+                    this.defaultLocation = defaultLocation;
                     res &= true;
                 }
                 else
@@ -112,9 +113,9 @@ namespace ProjectSetupKit
 
             if (String.IsNullOrWhiteSpace(this.inputDirectory))
             {
-                if (System.IO.Directory.Exists(DEFAULTTEMPLATE))
+                if (System.IO.Directory.Exists(Resources.DefaultTemplateName))
                 {
-                    this.inputDirectory = DEFAULTTEMPLATE;
+                    this.inputDirectory = Resources.DefaultTemplateName;
                     res &= true;
                 }
                 else
@@ -130,7 +131,9 @@ namespace ProjectSetupKit
         bool isValid = false;
         public bool IsValid { get { return isValid; } }
 
-        string defaultLocation;
+        private string defaultLocation;
+        public string DefaultLocation { get { return this.defaultLocation; } }
+
         string inputDirectory;
         public string Template { get { return this.inputDirectory; } }
         #endregion Attributes
