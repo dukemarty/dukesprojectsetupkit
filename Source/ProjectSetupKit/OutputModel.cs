@@ -1,41 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ProjectSetupKit
+﻿namespace ProjectSetupKit
 {
     class OutputModel
     {
         public OutputModel()
         {
-            this.name = "";
-            this.location = "";
-            this.fullpath = "";
+            m_name = "";
+            m_location = "";
+            m_fullpath = "";
         }
 
-        public void config(string name, string location)
+        public void Config(string name, string location)
         {
-            this.name = name;
-            this.location = location;
+            m_name = name;
+            m_location = location;
 
-            this.fullpath = System.IO.Path.Combine(this.location, this.name);
+            m_fullpath = System.IO.Path.Combine(m_location, m_name);
         }
 
-        public bool isValidTarget()
+        public bool IsValidTarget()
         {
-            return System.IO.Directory.Exists(this.location) && !(System.IO.Directory.Exists(this.fullpath));
+            return System.IO.Directory.Exists(m_location) && !(System.IO.Directory.Exists(m_fullpath));
         }
 
-        public void install(InputModel input)
+        public void Install(InputModel input)
         {
-            DirectoryCopy(input.Template, this.fullpath, true);
+            DirectoryCopy(input.Template, m_fullpath, true);
         }
 
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(sourceDirName);
-            System.IO.DirectoryInfo[] dirs = dir.GetDirectories();
+            var dir = new System.IO.DirectoryInfo(sourceDirName);
+            var dirs = dir.GetDirectories();
 
             if (!dir.Exists)
             {
@@ -52,7 +47,7 @@ namespace ProjectSetupKit
             System.IO.FileInfo[] files = dir.GetFiles();
             foreach (System.IO.FileInfo file in files)
             {
-                string temppath = System.IO.Path.Combine(destDirName, file.Name);
+                var temppath = System.IO.Path.Combine(destDirName, file.Name);
                 file.CopyTo(temppath, false);
             }
 
@@ -67,10 +62,10 @@ namespace ProjectSetupKit
         }
 
         #region Attributes
-        string name;
-        string location;
+        string m_name;
+        string m_location;
 
-        string fullpath;
+        string m_fullpath;
 
         #endregion Attributes
     }

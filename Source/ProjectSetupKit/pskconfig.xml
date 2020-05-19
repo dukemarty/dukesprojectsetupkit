@@ -1,9 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ProjectSetupKitConfiguration>
+  <Project>
+    <Name>Local project</Name>
   <TemplateDirectory>
-    ProjectSetupKitTemplate
+    ProjectSetupKitTemplates\LocalProject
   </TemplateDirectory>
   <DefaultLocation>
     C:\Users\DELOESMA\Documents\Projekte
   </DefaultLocation>
+  </Project>
+  <Project>
+    <Name>
+      IBN
+    </Name>
+    <TemplateDirectory>
+      ProjectSetupKitTemplates\IBN-Notizen
+    </TemplateDirectory>
+    <DefaultLocation>
+      C:\Users\DELOESMA\Documents\Whiteboard
+    </DefaultLocation>
+  </Project>
 </ProjectSetupKitConfiguration>

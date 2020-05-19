@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using ProjectSetupKit.Properties;
 
@@ -12,16 +9,11 @@ namespace ProjectSetupKit
     /// </summary>
     class InputModel
     {
-        #region Attributes
-        private bool isValid = false;
-        private string defaultLocation;
-        private string inputDirectory;
-        #endregion Attributes
-
         #region Properties
-        public bool IsValid { get { return isValid; } }
-        public string DefaultLocation { get { return this.defaultLocation; } }
-        public string Template { get { return this.inputDirectory; } }
+        public bool IsValid { get { return m_isValid; } }
+
+        public string DefaultLocation { get { return m_defaultLocation; } }
+        public string Template { get { return m_inputDirectory; } }
         #endregion
 
         /// <summary>
@@ -31,23 +23,23 @@ namespace ProjectSetupKit
         /// <remarks>Postcondition: IsValid==true if a default location and a template input directory could be set, otherwise IsValid==false.</remarks>
         public InputModel()
         {
-            this.defaultLocation = "";
-            this.inputDirectory = "";
+            m_defaultLocation = "";
+            m_inputDirectory = "";
 
-            if (loadConfig())
+            if (LoadConfig())
             {
-                this.isValid = true;
+                m_isValid = true;
             }
             else
             {
                 if (System.IO.Directory.Exists(Resources.DefaultTemplateName))
                 {
-                    this.inputDirectory = Resources.DefaultTemplateName;
-                    this.isValid = true;
+                    m_inputDirectory = Resources.DefaultTemplateName;
+                    m_isValid = true;
                 }
                 else
                 {
-                    this.isValid = false;
+                    m_isValid = false;
                 }
             }
         }
@@ -57,17 +49,17 @@ namespace ProjectSetupKit
         /// Load configuration 
         /// </summary>
         /// <returns></returns>
-        private bool loadConfig()
+        private bool LoadConfig()
         {
-            bool res = false;
+            var res = false;
 
             if (System.IO.File.Exists(Resources.ConfigFilename))
             {
-                readXmlDatafile(Resources.ConfigFilename);
+                ReadXmlDatafile(Resources.ConfigFilename);
 
-                if (string.IsNullOrWhiteSpace(this.defaultLocation) || string.IsNullOrWhiteSpace(this.inputDirectory))
+                if (string.IsNullOrWhiteSpace(m_defaultLocation) || string.IsNullOrWhiteSpace(m_inputDirectory))
                 {
-                    res = insertDefaultValuesIfPossible();
+                    res = InsertDefaultValuesIfPossible();
                 }
                 else
                 {
@@ -82,15 +74,15 @@ namespace ProjectSetupKit
         /// Read configuration from xml data file.
         /// </summary>
         /// <param name="filename">name of the configuration file</param>
-        private void readXmlDatafile(string filename)
+        private void ReadXmlDatafile(string filename)
         {
             string sName = "";
-            XmlTextReader textreader = new XmlTextReader(filename);
+            var textreader = new XmlTextReader(filename);
 
             textreader.Read();
 
-            System.Console.WriteLine(textreader.Name);
-            System.Console.WriteLine(textreader.NodeType);
+            Console.WriteLine(textreader.Name);
+            Console.WriteLine(textreader.NodeType);
 
             while (textreader.Read())
             {
@@ -103,10 +95,10 @@ namespace ProjectSetupKit
                         switch (sName.ToLower())
                         {
                             case "templatedirectory":
-                                this.inputDirectory = textreader.Value.Trim();
+                                m_inputDirectory = textreader.Value.Trim();
                                 break;
                             case "defaultlocation":
-                                this.defaultLocation = textreader.Value.Trim();
+                                m_defaultLocation = textreader.Value.Trim();
                                 break;
                         }
                         break;
@@ -114,16 +106,16 @@ namespace ProjectSetupKit
             }
         }
 
-        private bool insertDefaultValuesIfPossible()
+        private bool InsertDefaultValuesIfPossible()
         {
-            bool res = true;
+            var res = true;
 
-            if (String.IsNullOrWhiteSpace(this.defaultLocation))
+            if (String.IsNullOrWhiteSpace(m_defaultLocation))
             {
-                string defaultLocation = Environment.ExpandEnvironmentVariables(Resources.EnvironmentExpressionForDefaultLocation);
+                var defaultLocation = Environment.ExpandEnvironmentVariables(Resources.EnvironmentExpressionForDefaultLocation);
                 if (System.IO.Directory.Exists(defaultLocation))
                 {
-                    this.defaultLocation = defaultLocation;
+                    m_defaultLocation = defaultLocation;
                     res &= true;
                 }
                 else
@@ -132,11 +124,11 @@ namespace ProjectSetupKit
                 }
             }
 
-            if (String.IsNullOrWhiteSpace(this.inputDirectory))
+            if (String.IsNullOrWhiteSpace(m_inputDirectory))
             {
                 if (System.IO.Directory.Exists(Resources.DefaultTemplateName))
                 {
-                    this.inputDirectory = Resources.DefaultTemplateName;
+                    m_inputDirectory = Resources.DefaultTemplateName;
                     res &= true;
                 }
                 else
@@ -149,5 +141,10 @@ namespace ProjectSetupKit
         }
         #endregion Private methods
 
+        #region Attributes
+        private bool m_isValid = false;
+        private string m_defaultLocation;
+        private string m_inputDirectory;
+        #endregion Attributes
     }
 }

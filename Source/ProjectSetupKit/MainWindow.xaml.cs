@@ -23,11 +23,11 @@ namespace ProjectSetupKit
         {
             InitializeComponent();
 
-            this.vm = new MainWindowVM(this);
-            DataContext = this.vm;
+            vm = new MainWindowVM(this);
+            DataContext = vm;
 
-            this.PreviewKeyDown += new KeyEventHandler(HandleEscapeKey);
-            this.PreviewKeyDown += new KeyEventHandler(HandleEnterKey);
+            PreviewKeyDown += HandleEscapeKey;
+            PreviewKeyDown += HandleEnterKey;
 
             Loaded += (sender, e) => MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
         }
@@ -51,7 +51,7 @@ namespace ProjectSetupKit
                     binding.UpdateSource();
                 }
 
-                if (vm.installNewProject())
+                if (vm.InstallNewProject())
                 {
                     Close();
                 }
@@ -62,7 +62,7 @@ namespace ProjectSetupKit
             }
         }
 
-        public void exitWithError(string message)
+        public void ExitWithError(string message)
         {
             MessageBox.Show(message, "Error", MessageBoxButton.OK);
             Close();
