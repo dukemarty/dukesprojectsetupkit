@@ -14,7 +14,7 @@ namespace ProjectSetupKit
 
             if (!dir.Exists)
             {
-                throw new System.IO.DirectoryNotFoundException(String.Format("Source directory does not exist or could not be found: {0}", sourceDirName));
+                throw new System.IO.DirectoryNotFoundException($"Source directory does not exist or could not be found: {sourceDirName}");
             }
 
             if (!System.IO.Directory.Exists(destDirName))

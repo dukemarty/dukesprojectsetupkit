@@ -46,10 +46,8 @@ namespace ProjectSetupKit
     {
         #region Properties
 
-        public string VersionText
-        {
-            get { return String.Format("v{0}", Assembly.GetExecutingAssembly().GetName().Version); }
-        }
+        public string VersionText => $"v{Assembly.GetExecutingAssembly().GetName().Version}";
+
 
         public string ProjectName
         {
@@ -74,10 +72,7 @@ namespace ProjectSetupKit
             }
         }
 
-        public CollectionView ProjectTypes
-        {
-            get { return new CollectionView(m_input.ProjectTypes); }
-        }
+        public CollectionView ProjectTypes => new CollectionView(m_input.ProjectTypes);
 
         public string ActiveType
         {
@@ -107,13 +102,7 @@ namespace ProjectSetupKit
             Location = m_input.DefaultLocation;
         }
 
-        public void NotifyPropertyChanged(string propName)
-        {
-            if (null != PropertyChanged)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
-        }
+        public void NotifyPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 
         /// <summary>
         /// Install loaded project template to chosen location with user-given project name.
