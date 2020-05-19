@@ -44,15 +44,28 @@ namespace ProjectSetupKit
         {
             if (e.Key == Key.Enter || e.Key == Key.Return)
             {
+                object focusObj = FocusManager.GetFocusedElement(this);
+                if (focusObj != null && focusObj is TextBox)
+                {
+                    var binding = (focusObj as TextBox).GetBindingExpression(TextBox.TextProperty);
+                    binding.UpdateSource();
+                }
+
                 if (vm.installNewProject())
                 {
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("blabla", "Error", MessageBoxButton.OK);
+                    MessageBox.Show("Template could not be installed with the given parameters.", "Error", MessageBoxButton.OK);
                 }
             }
+        }
+
+        public void exitWithError(string message)
+        {
+            MessageBox.Show(message, "Error", MessageBoxButton.OK);
+            Close();
         }
 
         MainWindowVM vm;
