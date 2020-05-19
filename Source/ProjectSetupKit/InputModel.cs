@@ -12,6 +12,18 @@ namespace ProjectSetupKit
     /// </summary>
     class InputModel
     {
+        #region Attributes
+        private bool isValid = false;
+        private string defaultLocation;
+        private string inputDirectory;
+        #endregion Attributes
+
+        #region Properties
+        public bool IsValid { get { return isValid; } }
+        public string DefaultLocation { get { return this.defaultLocation; } }
+        public string Template { get { return this.inputDirectory; } }
+        #endregion
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -40,6 +52,11 @@ namespace ProjectSetupKit
             }
         }
 
+        #region Private methods
+        /// <summary>
+        /// Load configuration 
+        /// </summary>
+        /// <returns></returns>
         private bool loadConfig()
         {
             bool res = false;
@@ -61,6 +78,10 @@ namespace ProjectSetupKit
             return res;
         }
 
+        /// <summary>
+        /// Read configuration from xml data file.
+        /// </summary>
+        /// <param name="filename">name of the configuration file</param>
         private void readXmlDatafile(string filename)
         {
             string sName = "";
@@ -126,16 +147,7 @@ namespace ProjectSetupKit
 
             return res;
         }
+        #endregion Private methods
 
-        #region Attributes
-        bool isValid = false;
-        public bool IsValid { get { return isValid; } }
-
-        private string defaultLocation;
-        public string DefaultLocation { get { return this.defaultLocation; } }
-
-        string inputDirectory;
-        public string Template { get { return this.inputDirectory; } }
-        #endregion Attributes
     }
 }

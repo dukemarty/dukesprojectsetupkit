@@ -81,19 +81,22 @@ namespace ProjectSetupKit
             }
         }
 
-        #region Attributes
-        MainWindow window;
-
+        #region Events
         public event PropertyChangedEventHandler PropertyChanged;
+        #endregion Events
+
+        #region Attributes
+        private MainWindow window;
+
 
         /// <summary>
         /// container for input data, i.e. project template and config file
         /// </summary>
-        InputModel input = new InputModel();
+        private InputModel input = new InputModel();
         /// <summary>
         /// container for output data, i.e. target location and project name
         /// </summary>
-        OutputModel output = new OutputModel();
+        private OutputModel output = new OutputModel();
 
         /// <summary>
         /// Name of the project which is instantiated from the project template.
@@ -113,7 +116,18 @@ namespace ProjectSetupKit
         /// Attribute for target location (directory) where the project template is installed.
         /// </summary>
         private string location;
-        public string Location 
+
+        /// <summary>
+        /// Command object to be used with open file button in main window
+        /// </summary>
+        public ICommand ChooseLocationCommand { get; set; }
+        #endregion Attributes
+
+        #region Properties
+        /// <summary>
+        /// Property for target location (i.e. directory) where the project template shall be installed.
+        /// </summary>
+        public string Location
         {
             get { return this.location; }
             set
@@ -123,10 +137,6 @@ namespace ProjectSetupKit
             }
         }
 
-        /// <summary>
-        /// Command object to be used with open file button in main window
-        /// </summary>
-        public ICommand ChooseLocationCommand { get; set; }
-        #endregion Attributes
+        #endregion Properties
     }
 }
