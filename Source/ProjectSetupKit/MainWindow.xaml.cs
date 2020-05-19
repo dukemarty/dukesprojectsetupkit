@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ProjectSetupKit.Properties;
 
 namespace ProjectSetupKit
 {
@@ -14,7 +15,11 @@ namespace ProjectSetupKit
             InitializeComponent();
 
             vm = new MainWindowVM(this);
-            DataContext = vm;
+            DataContext = new
+            {
+                vm,
+                settings = Settings.Default
+            };
 
             PreviewKeyDown += HandleEscapeKey;
             PreviewKeyDown += HandleEnterKey;
