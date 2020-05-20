@@ -50,6 +50,7 @@
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="Background" Value="{StaticResource InputBackgroundBrush}" />
         </Style>
+        <BitmapImage x:Key="IconImage" UriSource="Resources/4137172 - blueprint building construction industry.png" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -63,6 +64,17 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
+        <Rectangle
+            Grid.Row="0"
+            Grid.Column="0"
+            Fill="#88131616" />
+        <Image
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Source="{StaticResource IconImage}" />
         <Label
             Grid.Row="0"
             Grid.ColumnSpan="3"

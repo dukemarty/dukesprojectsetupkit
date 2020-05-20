@@ -12,7 +12,7 @@ namespace ProjectSetupKit.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace ProjectSetupKit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#960A0A0A")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#96212626")]
         public string InputBackgroundColor {
             get {
                 return ((string)(this["InputBackgroundColor"]));
@@ -34,7 +34,7 @@ namespace ProjectSetupKit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#CC101010")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#CC131616")]
         public string WindowBackgroundColor {
             get {
                 return ((string)(this["WindowBackgroundColor"]));
@@ -43,7 +43,7 @@ namespace ProjectSetupKit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF25E1FF")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF00B0B0")]
         public string TextColor {
             get {
                 return ((string)(this["TextColor"]));
