@@ -43,7 +43,7 @@ namespace ProjectSetupKit.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF00B0B0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF00C8C8")]
         public string TextColor {
             get {
                 return ((string)(this["TextColor"]));
