@@ -63,6 +63,7 @@
     <Compile Include="Converters.cs" />
     <Compile Include="FileDirHandling.cs" />
     <Compile Include="ProjectSetupKitConfiguration.cs" />
+    <Compile Include="SampleMainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,7 +73,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="InputModelSet.cs" />
-    <Compile Include="MainWindowVM.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

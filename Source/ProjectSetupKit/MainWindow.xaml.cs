@@ -14,7 +14,7 @@ namespace ProjectSetupKit
         {
             InitializeComponent();
 
-            vm = new MainWindowVM(this);
+            vm = new MainWindowViewModel(this);
             DataContext = new
             {
                 vm,
@@ -67,6 +67,6 @@ namespace ProjectSetupKit
             Close();
         }
 
-        MainWindowVM vm;
+        MainWindowViewModel vm;
     }
 }

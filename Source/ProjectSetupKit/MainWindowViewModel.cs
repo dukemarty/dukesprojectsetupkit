@@ -9,7 +9,7 @@ namespace ProjectSetupKit
 {
     class ChooseLocation : ICommand
     {
-        public ChooseLocation(MainWindowVM model)
+        public ChooseLocation(MainWindowViewModel model)
         {
             m_model = model;
         }
@@ -35,13 +35,13 @@ namespace ProjectSetupKit
 
         }
 
-        private readonly MainWindowVM m_model;
+        private readonly MainWindowViewModel m_model;
     }
 
     /// <summary>
     /// ViewModel for MainWindow class/form.
     /// </summary>
-    class MainWindowVM : INotifyPropertyChanged
+    class MainWindowViewModel : INotifyPropertyChanged
     {
         #region Properties
 
@@ -88,7 +88,7 @@ namespace ProjectSetupKit
         /// Constructor.
         /// </summary>
         /// <param name="window">assigned m_window for this vm</param>
-        public MainWindowVM(MainWindow window)
+        public MainWindowViewModel(MainWindow window)
         {
             ChooseLocationCommand = new ChooseLocation(this);
 
