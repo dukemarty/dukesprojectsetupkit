@@ -41,7 +41,6 @@ namespace ProjectSetupKit
     /// <summary>
     /// ViewModel for MainWindow class/form.
     /// </summary>
-    // ReSharper disable once InconsistentNaming
     class MainWindowVM : INotifyPropertyChanged
     {
         #region Properties
