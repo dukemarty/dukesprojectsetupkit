@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters.cs" />
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="FileDirHandling.cs" />
     <Compile Include="ProjectSetupKitConfiguration.cs" />
     <Compile Include="SampleMainViewModel.cs" />
@@ -109,11 +110,6 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pskconfig.xml">
-      <SubType>Designer</SubType>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\4137172 - blueprint building construction industry.png" />
   </ItemGroup>
   <ItemGroup>
@@ -123,7 +119,7 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy $(ProjectDir)\Data $(TargetDir) /E /Y
 
-copy $(ProjectDir)\pskconfig.xml $(TargetDir) /Y</PostBuildEvent>
+REM copy $(ProjectDir)\pskconfig.xml $(TargetDir) /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

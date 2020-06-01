@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows.Data;
+using static ProjectSetupKit.InputModelSet;
 
 namespace ProjectSetupKit
 {
@@ -15,7 +18,29 @@ namespace ProjectSetupKit
 
         public string Location { get; set; } = "TestLocation";
 
-        //public CollectionView ProjectTypes => new CollectionView(m_input.ProjectTypes);
+        public ObservableCollection<InputModel> ProjectTypes => new ObservableCollection<InputModel>(new[] {
+            new InputModel
+            {
+                TypeName = "Foo",
+                DefaultLocation = "Loc1",
+                InputDirectory = "SourceLoc1",
+                IconPath = "4137172 - blueprint building construction industry.png,"
+            },
+            new InputModel
+            {
+                TypeName = "Bar",
+                DefaultLocation = "Loc2",
+                InputDirectory = "SourceLoc2",
+                IconPath = "4137172 - blueprint building construction industry.png,"
+            },
+            new InputModel
+            {
+                TypeName = "uug",
+                DefaultLocation = "Loc3",
+                InputDirectory = "SourceLoc3",
+                IconPath = "4137172 - blueprint building construction industry.png,"
+            },
+        });
 
         //public string ActiveType
         //{

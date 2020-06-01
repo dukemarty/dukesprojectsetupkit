@@ -4,6 +4,8 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
+using static ProjectSetupKit.InputModelSet;
 
 namespace ProjectSetupKit
 {
@@ -71,14 +73,14 @@ namespace ProjectSetupKit
             }
         }
 
-        public CollectionView ProjectTypes => new CollectionView(m_input.ProjectTypes);
+        public ObservableCollection<InputModel> ProjectTypes => m_input.Projects;
 
-        public string ActiveType
+        public InputModel ActiveType
         {
-            get { return m_input.CurrentName; }
+            get { return m_input.CurrentModel; }
             set
             {
-                m_input.CurrentName = value;
+                m_input.CurrentName = value.TypeName;
                 Location = m_input.DefaultLocation;
             }
         }

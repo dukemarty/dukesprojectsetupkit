@@ -13,11 +13,13 @@ namespace ProjectSetupKit
     /// </summary>
     class InputModelSet
     {
-        private class InputModel
+        internal class InputModel
         {
             public string TypeName { get; set; }
             public string DefaultLocation { get; set; }
             public string InputDirectory { get; set; }
+
+            public string IconPath { get; set; }
 
             public InputModel() { }
 
@@ -26,12 +28,23 @@ namespace ProjectSetupKit
                 TypeName = project.Name;
                 DefaultLocation = project.DefaultLocation;
                 InputDirectory = project.TemplateDirectory;
+                IconPath = project.IconPath;
             }
         }
 
         #region Properties
 
         public bool IsValid { get; private set; }
+
+        public InputModel CurrentModel
+        {
+            get
+            {
+                if (!m_inputModels.ContainsKey(m_activeProject)) { return null; }
+
+                return m_inputModels[m_activeProject];
+            }
+        }
 
         public string CurrentName
         {
@@ -55,6 +68,8 @@ namespace ProjectSetupKit
         {
             get { return new ObservableCollection<string>(m_inputModels.Keys); }
         }
+
+        public ObservableCollection<InputModel> Projects => new ObservableCollection<InputModel>(m_inputModels.Values);
         #endregion
 
         /// <summary>

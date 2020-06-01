@@ -7,8 +7,8 @@
     xmlns:local="clr-namespace:ProjectSetupKit"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="ProjectSetupKit"
-    Width="544"
-    Height="228"
+    Width="700"
+    Height="300"
     d:DataContext="{d:DesignInstance local:SampleDataContext,
                                      IsDesignTimeCreatable=True}"
     AllowsTransparency="True"
@@ -20,6 +20,7 @@
     mc:Ignorable="d">
     <Window.Resources>
         <local:ColorStringConverter x:Key="Color2String" />
+        <local:PathImageConverter x:Key="Path2Image" />
         <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{Binding settings.WindowBackgroundColor, Converter={StaticResource Color2String}}" />
         <SolidColorBrush x:Key="InputBackgroundBrush" Color="{Binding settings.InputBackgroundColor, Converter={StaticResource Color2String}}" />
         <SolidColorBrush x:Key="TextBrush" Color="{Binding settings.TextColor, Converter={StaticResource Color2String}}" />
@@ -59,9 +60,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="60" />
             <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
@@ -80,12 +82,13 @@
             VerticalAlignment="Top"
             Source="{StaticResource IconImage}" />
         <Label
+            x:Name="TitleLabel"
             Grid.Row="0"
             Grid.ColumnSpan="3"
             Margin="0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Content="Project Setup Kit"
+            Content="Duke's Project Setup Kit"
             FontSize="16" />
         <Label
             Grid.Row="0"
@@ -104,17 +107,55 @@
             Grid.Row="3"
             Grid.Column="0"
             Content="Location" />
-        <ComboBox
-            x:Name="cbProjectType"
+        <ListBox
+            x:Name="ProjectTypeListBox"
             Grid.Row="1"
             Grid.Column="1"
             Margin="10"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center"
-            FontSize="14"
+            Background="Transparent"
+            BorderBrush="Transparent"
+            BorderThickness="0"
             ItemsSource="{Binding vm.ProjectTypes}"
-            SelectedValue="{Binding vm.ActiveType}"
-            TabIndex="3" />
+            SelectedValue="{Binding vm.ActiveType}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Stretch" Background="{StaticResource WindowBackgroundBrush}" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton
+                        Background="Transparent"
+                        GroupName="ProjectTypeGroup"
+                        Style="{StaticResource {x:Type ToggleButton}}">
+                        <Grid Background="{StaticResource InputBackgroundBrush}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition Height="20" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="1"
+                                Source="{Binding IconPath, Converter={StaticResource Path2Image}}" />
+                            <Label
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="0"
+                                Margin="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Content="{Binding Path=TypeName}"
+                                FontSize="10"
+                                Foreground="{Binding ElementName=TitleLabel, Path=Foreground}" />
+                        </Grid>
+                    </RadioButton>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <TextBox
             x:Name="tbProjectName"
             Grid.Row="2"

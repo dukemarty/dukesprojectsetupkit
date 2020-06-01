@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ProjectSetupKit
 {
@@ -30,6 +32,28 @@ namespace ProjectSetupKit
             var val = (Color)value;
 
             return $"#{val.A:X2}{val.R:X2}{val.G:X2}{val.B:X2}";
+        }
+    }
+
+    public class PathImageConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var path = value as string;
+            if ((path == null) || !File.Exists(path))
+            {
+                return null;
+            }
+
+            var uri = new Uri($"file://{Path.GetFullPath(path)}");
+            var res = new BitmapImage(uri);
+
+            return res;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
