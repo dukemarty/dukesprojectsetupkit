@@ -4,4 +4,8 @@
 obj/
 bin/
 
+.vs/
+
 *.vsdoc
+
+Releases/
